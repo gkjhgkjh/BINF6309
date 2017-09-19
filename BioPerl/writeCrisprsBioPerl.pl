@@ -12,22 +12,21 @@ my %kMerHash = ();
 #hash to store occurrences of last 12 positions
 my %last12Counts = ();
 
-#Read in the fasta file and declare it as a scalar
+#Read in the fasta file
 my $seqio_obj = Bio::SeqIO->new(
 	-file   => "dmel-all-chromosome-r6.17.fasta",
 	-format => 'fasta'
 );
 
-#write
+#output file
 my $seqio_out = Bio::SeqIO->new(
 	-file   => '>crisprs1.fasta',
 	-format => 'fasta'
 );
 
-#get the sequences from fasta file
+#get the sequences from fasta file and process it through sub
 while ( my $seq_obj = $seqio_obj->next_seq ) {
 	my $seq = $seq_obj->seq;
-
 	#print $seq_obj->desc,"\n";
 	processSeq( \$seq );
 }
