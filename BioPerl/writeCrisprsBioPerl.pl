@@ -5,6 +5,33 @@ use diagnostics;
 
 use Bio::Seq;
 use Bio::SeqIO;
+use Getopt::Long;
+use Pod::Usage;
+
+my $fasta = '';
+my $crispr = '';
+my $usage = "\n$0 [options] \n
+Options:
+	-fasta	Fasta file
+	-help	Show this message
+\n";
+
+GetOptions(
+	'fasta=s' => \$fasta,
+	'crispr=s' => \$crispr,
+	help => sub {pod2usage($usage);},
+	
+) or pod2usage($usage);
+
+unless ($fasta and $crispr) {
+	unless ($fasta) {
+		print "Specify file for fasta input\n";
+		}
+	unless ($crispr) {
+		print "Specify file for crispr output\n", $usage;
+		}
+		die $usage
+}
 
 #hash to store kmers
 my %kMerHash = ();
@@ -20,7 +47,7 @@ my $seqio_obj = Bio::SeqIO->new(
 
 #output file
 my $seqio_out = Bio::SeqIO->new(
-	-file   => '>crisprs1.fasta',
+	-file   => ">$crispr",
 	-format => 'fasta'
 );
 
