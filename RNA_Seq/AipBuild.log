@@ -1,0 +1,62 @@
+Opening file /scratch/AiptasiaMiSeq/GCA_001417965.1_Aiptasia_genome_1.1_genomic.fna
+  Contig LJWW01000001.1: concatenated at chromosome end: LJWW01000001.1:1..1835033 (length = 1835033 nt)
+  Contig LJWW01000010.1: concatenated at chromosome end: LJWW01000010.1:1..1281744 (length = 1281744 nt)
+  Processed short contigs (<1000000 nt): ...................................................................................................More than 100 short contigs.  Will stop printing.
+
+  Contig LJWW01000011.1: concatenated at chromosome end: LJWW01000011.1:1..1251524 (length = 1251524 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000012.1: concatenated at chromosome end: LJWW01000012.1:1..1246455 (length = 1246455 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000013.1: concatenated at chromosome end: LJWW01000013.1:1..1176554 (length = 1176554 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000014.1: concatenated at chromosome end: LJWW01000014.1:1..1148405 (length = 1148405 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000015.1: concatenated at chromosome end: LJWW01000015.1:1..1142156 (length = 1142156 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000016.1: concatenated at chromosome end: LJWW01000016.1:1..1115932 (length = 1115932 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000017.1: concatenated at chromosome end: LJWW01000017.1:1..1081719 (length = 1081719 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000018.1: concatenated at chromosome end: LJWW01000018.1:1..1062748 (length = 1062748 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000019.1: concatenated at chromosome end: LJWW01000019.1:1..1062987 (length = 1062987 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000002.1: concatenated at chromosome end: LJWW01000002.1:1..2343502 (length = 2343502 nt)
+  Contig LJWW01000020.1: concatenated at chromosome end: LJWW01000020.1:1..1057760 (length = 1057760 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000021.1: concatenated at chromosome end: LJWW01000021.1:1..1761890 (length = 1761890 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000022.1: concatenated at chromosome end: LJWW01000022.1:1..1051403 (length = 1051403 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000023.1: concatenated at chromosome end: LJWW01000023.1:1..1048912 (length = 1048912 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000024.1: concatenated at chromosome end: LJWW01000024.1:1..1035770 (length = 1035770 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000025.1: concatenated at chromosome end: LJWW01000025.1:1..1019855 (length = 1019855 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000026.1: concatenated at chromosome end: LJWW01000026.1:1..1019462 (length = 1019462 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000003.1: concatenated at chromosome end: LJWW01000003.1:1..1551568 (length = 1551568 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000004.1: concatenated at chromosome end: LJWW01000004.1:1..1551675 (length = 1551675 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000005.1: concatenated at chromosome end: LJWW01000005.1:1..1499707 (length = 1499707 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000006.1: concatenated at chromosome end: LJWW01000006.1:1..1488632 (length = 1488632 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000069.1: concatenated at chromosome end: LJWW01000069.1:1..1085662 (length = 1085662 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000007.1: concatenated at chromosome end: LJWW01000007.1:1..1445109 (length = 1445109 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000008.1: concatenated at chromosome end: LJWW01000008.1:1..1436715 (length = 1436715 nt)
+  Processed short contigs (<1000000 nt): 
+  Contig LJWW01000009.1: concatenated at chromosome end: LJWW01000009.1:1..1394558 (length = 1394558 nt)
+  Processed short contigs (<1000000 nt): 
+============================================================
+Contig mapping information has been written to file ./AiptasiaGmapDb.coords.
+You should look at this file, and edit it if necessary
+If everything is okay, you should proceed by running
+    make gmapdb
+============================================================
+No alternate scaffolds observed
+Found 44386286 exceptions
