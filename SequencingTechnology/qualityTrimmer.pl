@@ -9,7 +9,7 @@ use Bio::Seq::Quality;
 use Getopt::Long;
 use Pod::Usage;
 
-#set variable
+#set variables
 my $left = '';
 my $right = '';
 my $interleaved = '';
