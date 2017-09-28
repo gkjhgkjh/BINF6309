@@ -9,6 +9,7 @@ use Bio::Seq::Quality;
 use Getopt::Long;
 use Pod::Usage;
 
+#set variable
 my $left = '';
 my $right = '';
 my $interleaved = '';
@@ -20,7 +21,7 @@ Options:
 	-qual	Quality score minimum
 	-help	Show this message
 \n";
-
+#set options
 GetOptions(
 	'left=s' => \$left,
 	'right=s' => \$right,
@@ -29,7 +30,7 @@ GetOptions(
 	help => sub {pod2usage($usage);},
 	
 ) or pod2usage($usage);
-
+#set warnings for file check
 unless ($left and $right and $qual and $interleaved) {
 	unless ($left) {
 		print "Specify file for left reads\n";
