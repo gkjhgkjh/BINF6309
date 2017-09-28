@@ -8,6 +8,7 @@ use Bio::SeqIO;
 use Getopt::Long;
 use Pod::Usage;
 
+#set variables
 my $fasta = '';
 my $crispr = '';
 my $usage = "\n$0 [options] \n
@@ -16,6 +17,7 @@ Options:
 	-help	Show this message
 \n";
 
+#set options
 GetOptions(
 	'fasta=s' => \$fasta,
 	'crispr=s' => \$crispr,
@@ -23,6 +25,7 @@ GetOptions(
 	
 ) or pod2usage($usage);
 
+#set warnings
 unless ($fasta and $crispr) {
 	unless ($fasta) {
 		print "Specify file for fasta input\n";
