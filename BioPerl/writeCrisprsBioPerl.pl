@@ -44,7 +44,7 @@ my %last12Counts = ();
 
 #Read in the fasta file
 my $seqio_obj = Bio::SeqIO->new(
-	-file   => "dmel-all-chromosome-r6.17.fasta",
+	-file   => "$fasta",
 	-format => 'fasta'
 );
 
