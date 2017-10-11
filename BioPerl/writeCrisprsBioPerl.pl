@@ -5,6 +5,36 @@ use diagnostics;
 
 use Bio::Seq;
 use Bio::SeqIO;
+use Getopt::Long;
+use Pod::Usage;
+
+#set variables
+my $fasta = '';
+my $crispr = '';
+my $usage = "\n$0 [options] \n
+Options:
+	-fasta	Fasta file
+	-help	Show this message
+\n";
+
+#set options
+GetOptions(
+	'fasta=s' => \$fasta,
+	'crispr=s' => \$crispr,
+	help => sub {pod2usage($usage);},
+	
+) or pod2usage($usage);
+
+#set warnings
+unless ($fasta and $crispr) {
+	unless ($fasta) {
+		print "Specify file for fasta input\n";
+		}
+	unless ($crispr) {
+		print "Specify file for crispr output\n", $usage;
+		}
+		die $usage
+}
 
 #hash to store kmers
 my %kMerHash = ();
@@ -12,18 +42,19 @@ my %kMerHash = ();
 #hash to store occurrences of last 12 positions
 my %last12Counts = ();
 
-
-#Read in the fasta file and declare it as a scalar
+#Read in the fasta file
 my $seqio_obj = Bio::SeqIO->new(
-	-file   => "dmel-all-chromosome-r6.17.fasta",
+	-file   => "$fasta",
 	-format => 'fasta'
 );
-#write
+
+#output file
 my $seqio_out = Bio::SeqIO->new(
-	-file   => '>crisprs1.fasta',
+	-file   => ">$crispr",
 	-format => 'fasta'
 );
-#get the sequences from fasta file
+
+#get the sequences from fasta file and process it through sub
 while ( my $seq_obj = $seqio_obj->next_seq ) {
 	my $seq = $seq_obj->seq;
 	#print $seq_obj->desc,"\n";
@@ -55,11 +86,13 @@ sub processSeq {
 	   #Get a 21-mer substring from sequenceRef (two $ to deference reference to
 	   #sequence string) starting at the window start for length $windowStart
 		my $crisprSeq = substr( $$sequenceFile, $windowStart, $windowSize );
-			#print $crisprSeq,"\n";
+
+		#print $crisprSeq,"\n";
 
 #if the 21-mer ends in GG, create a hash with key=last 12 of k-mer and value is 21-mer
 #Regex where $1 is the crispr, and $2 contains the last 12 of crispr.
 		if ( $crisprSeq =~ /([ATGC]{9}([ATGC]{10}GG))$/ ) {
+
 			#Put the crispr in the hash with last 12 as key, full 21 as value.
 			$kMerHash{$2} = $1;
 			$last12Counts{$2}++;
@@ -80,6 +113,7 @@ for my $last12Seq ( sort ( keys %last12Counts ) ) {
 		#The last 12 seq of this CRISPR is unique in the genome.
 		#Increment the CRISPR count.
 		$crisprCount++;
+
 		#create object to store all the data
 		my $seq_obj = Bio::Seq->new(
 			-seq        => $kMerHash{$last12Seq},
