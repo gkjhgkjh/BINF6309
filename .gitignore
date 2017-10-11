@@ -1,0 +1,11 @@
+trinity_out_dir/
+AiptasiaGmapDb/
+/.metadata/
+*.fasta
+/.DS_Store
+*.fastq
+*.sam
+*.bam
+*.bai
+*.iit
+*.log
