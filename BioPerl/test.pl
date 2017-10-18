@@ -4,10 +4,4 @@ use strict;
 use diagnostics;
 
 
-my $s=2;
-
-sub check {
- print($s-1);
-}
-
-check()
+print join("\t","Tri","aaa" ),"\n";
