@@ -13,7 +13,7 @@ my %bioProc;
 while (<BIOP>) {
 	chomp;
 	my ($id, $name) = split("\t", $_);
-	$bioProc{$id}{$name}++;
+	$bioProc{$id} = $name;
 }
 
 while (<SP_TO_GO>) {
@@ -21,19 +21,20 @@ while (<SP_TO_GO>) {
 	my ($swissProt, $go) = split("\t", $_);
 	$spToGo{$swissProt}{$go}++;
 }
-
+my $count=0;
 while (<SP>) {
 	chomp;
 	my ($trinity, $swissProt, $description, $eValuw) =
 		split("\t", $_ );
-	if (defined $spToGo{$swissProt} & $bioProc{$spToGo{$swissProt}} ) {
+	if (defined $spToGo{$swissProt}) {
 		foreach my $go (sort keys %{$spToGo{$swissProt}}) {
-			print TRIN_SP_GO join("\t", $trinity, $description, $swissProt, $go, $bioProc{$spToGo{$swissProt}}), "\n";
+			if(defined $bioProc{$go}) {
+			print TRIN_SP_GO join("\t", $trinity, $description, $swissProt, $go, $bioProc{$go}), "\n";
+			}
 		}
 	}
 }
-
-
+print($count)
 
 
 #foreach my $swissProt (sort keys %spToGo) {
