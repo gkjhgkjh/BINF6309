@@ -1,6 +1,0 @@
-TrimmomaticPE: Started with arguments:
- -threads 1 -phred33 /scratch/AiptasiaMiSeq/fastq/Aip02.R1.fastq /scratch/AiptasiaMiSeq/fastq/Aip02.R2.fastq Aip02.R1.paired.fastq Aip02.R1.unpaired.fastq Aip02.R2.paired.fastq Aip02.R2.unpaired.fastq HEADCROP:0 ILLUMINACLIP:/usr/local/programs/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:30 MINLEN:36
-Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
-ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
-Input Read Pairs: 39478 Both Surviving: 31478 (79.74%) Forward Only Surviving: 3501 (8.87%) Reverse Only Surviving: 1455 (3.69%) Dropped: 3044 (7.71%)
-TrimmomaticPE: Completed successfully
