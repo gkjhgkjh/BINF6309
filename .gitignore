@@ -3,3 +3,5 @@
 !*.sh
 !*.pl
 !.gitignore
+!*.xprs
+!*.matrix
