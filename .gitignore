@@ -3,3 +3,10 @@
 !*.sh
 !*.pl
 !.gitignore
+!*.xprs
+!*.matrix
+!*.R
+!*.Rmd
+!*.html
+.Rproj.user
+!*.RProj
