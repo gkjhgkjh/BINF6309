@@ -1,4 +1,4 @@
-#!/usr/bash
+#!/bin/bash
 transcriptome=$1
 outPath=$2
 trinityPath='/usr/local/programs/trinityrnaseq-2.2.0'
@@ -16,6 +16,6 @@ do
 	nice -n19 $trinityPath/util/align_and_estimate_abundance.pl \
 	--transcripts $transcriptome --aln_method bowtie2 --est_method eXpress \
 	--trinity_mode --output_dir $outPath$sample --seqType fq --SS_lib_type FR \
-	--left $leftReads --right $rigthReads --thread_sount 1\
+	--left $leftReads --right $rightReads --thread_count 1 \
 	1>$outPath$sample$logSuffix 2>$outPath$sample$errSuffix &
 done
