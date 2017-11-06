@@ -6,7 +6,12 @@ echo "PairsIn,Smple" > pairsIn.csv
 outPath="Paired/"
 inPath="/scratch/AiptasiaMiSeq/fastq/"
 leftSuffix=".R1.fastq"
-#
+#1.use grep to find all the lines starting with @M0 in all the R1.fastq files.
+#2.pipe the output to cut and separate columns on :. get the first column.
+#3. pipe the output to sort.
+#4. pipe the output to sort.
+#5. use the -c option to provide a count of the lines collaspsed.
+#6. use sed to replace spaces with commas and remove path and suffix from filenames.
 #echo $outPath*$leftSuffix
 grep "\@M0" $outPath*$leftSuffix|\
 cut -d':' -f1|\
