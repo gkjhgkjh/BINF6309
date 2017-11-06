@@ -1,0 +1,89 @@
+---
+title: "DESeq2plot"
+output: html_document
+---
+
+```{r}
+library("DESeq2")
+library("RColorBrewer")
+library("pheatmap")
+```
+
+```{r}
+load("summarizedDeResults.RData")
+```
+
+```{r}
+plotDispEsts(ddsAll)
+```
+
+```{r}
+logThreshold=0
+alpha=.05
+upVibrio <- subset(dfBothAnnot, (padj.Vibrio < alpha) & (log2FoldChange.Vibrio > logThreshold))
+downVibrio <- subset(dfBothAnnot, (padj.Vibrio < alpha) & (log2FoldChange.Vibrio < logThreshold))
+upMenthol <- subset(dfBothAnnot, (padj.Menthol < alpha) & (log2FoldChange.Menthol > logThreshold))
+downMenthol <- subset(dfBothAnnot, (padj.Menthol < alpha) & (log2FoldChange.Menthol < logThreshold))
+listAll <- list(UpVibrio=row.names(upVibrio), DownVibrio=row.names(downVibrio), 
+                UpMenthol=row.names(upMenthol), DownMenthol=row.names(downMenthol))
+```
+
+```{r}
+plotMA(resVibrio, ylim=c(-4,4), alpha=.05)
+```
+
+```{r}
+plotMA(resMenthol, ylim=c(-4,4), alpha=.05)
+```
+
+```{r}
+rldAll <- rlog(ddsAll, blind=FALSE)
+sampleDists <- dist(t(assay(rldAll)))
+sampleDistMatrix <- as.matrix(sampleDists)
+rownames(sampleDistMatrix) <- paste(rldAll$Vibrio, rldAll$Menthol, sep="-")
+colnames(sampleDistMatrix) <- NULL
+colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+```
+
+```{r}
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows=sampleDists,
+         clustering_distance_cols=sampleDists,
+         col=colors)
+```
+
+```{r}
+plotPCA(rldAll, intgroup=c("Vibrio", "Menthol"))
+```
+
+```{r}
+upVibrio$count <- rep(1,nrow(upVibrio))
+downVibrio$count <- rep(1, nrow(downVibrio))
+upMenthol$count <- rep(1, nrow(upMenthol))
+downMenthol$count <- rep(1, nrow(downMenthol))
+vibrioCount <- merge(upVibrio, downVibrio, by=0, all=TRUE, suffixes=c("Up", "Down"))
+mentholCount <- merge(upMenthol, downMenthol, by=0, all=TRUE, suffixes=c("Up", "Down"))
+rownames(vibrioCount) <- vibrioCount$Row.names
+rownames(mentholCount) <- mentholCount$Row.names
+vibrioCount <- subset(vibrioCount, select = -c(Row.names) )
+mentholCount <- subset(mentholCount, select = -c(Row.names) )
+bothCount <- merge(vibrioCount, mentholCount, by=0, all=TRUE, suffixes=c("Vibrio", "Menthol"))
+rownames(bothCount) <- bothCount$Row.names
+bothCount <- subset(bothCount, select = c(countUpVibrio, countDownVibrio, countUpMenthol, countDownMenthol) )
+```
+
+```{r}
+bothCount$countUpVibrio[is.na(bothCount$countUpVibrio)] <- 0
+bothCount$countDownVibrio[is.na(bothCount$countDownVibrio)] <- 0
+bothCount$countUpMenthol[is.na(bothCount$countUpMenthol)] <- 0
+bothCount$countDownMenthol[is.na(bothCount$countDownMenthol)] <- 0
+```
+
+```{r}
+library("limma")
+```
+
+```{r}
+vennDiagram(vennCounts(bothCount), names=c("UpVibrio", "DownVibrio", "UpMenthol", "DownMenthol"), circle.col=c("red", "green", "blue", "yellow"))
+```
+

@@ -1,0 +1,90 @@
+---
+title: "DESeq2 Data Prep"
+author: "Chuck Roesel"
+date: "10/28/2017"
+output: html_document
+---
+#Data Prep
+Data prep is the process of cleaning up and organizing input data to conform to what an analysis package like DESeq2 requires as input. 
+#R Markdown
+We'll be using R Markdown, which makes it easier to document code and display and publish results. Sections of code show up in gray, with a green arrow to the right that you can click to run that chunk of code. R Markdown files should have the extension .Rmd, and the header begins and ends with \-\-\-. Each block of R code must start with \`\`\`{r} and end with \`\`\`. You can set additional options within the curly braces to determine how that code and output will be displayed. 
+#Clearing Session Variables
+First clear all session variables so previous attempts don't confuse the debugging process. R stores session variables, so if you run a script, then change a variable name, R will still have the old variable name stored in the session. You may have code using the old variable name, and it will work in the current session, but when you start a new session you'll get an error because that variable no longer exists. Clearing session variables at the start of a script will prevent this. 
+```{r}
+rm(list=ls())
+```
+#Load Annotations
+Read in the proteinGeneGo.txt annotation file downloaded from Blackboard. In the previous lessons you created your own annotation files from a small subset of the data, but for DESeq2 you'll be using the count and annotation files I provide in Blackboard. Display the first few lines with head to familiarize yourself with the format.
+```{r}
+spAnnot <- read.delim("proteinGeneGo.txt", sep="\t", header=FALSE)
+head(spAnnot)
+```
+#Set Column Names
+Notice that the columns don't have descriptive names. Fix that by setting the column names. Display with head after making the change.
+```{r}
+colnames(spAnnot) = c("Gene", "Protein", "GeneDesc", "GO")
+head(spAnnot)
+```
+#Select Desired Columns
+We only need the Gene and GeneDesc columns, so select them with subset. There are duplicate rows, so get rid of the duplicates with the unique function. Set the rownames to the Gene column so it's a data frame with genes as rownames, and just one column, the Gene description. Display with head.
+```{r}
+geneDesc <- subset(spAnnot, select=c(Gene, GeneDesc))
+geneDesc <- unique(geneDesc)
+rownames(geneDesc) = make.names(geneDesc$Gene, unique=TRUE)
+geneDesc <- subset(geneDesc, select=c(GeneDesc))
+head(geneDesc)
+```
+#Read in Counts
+Read in the counts file downloaded from Blackboard. Display the first few rows with head.
+```{r}
+rawCounts <- read.csv("mergedClcCounts.csv", row.names=1)
+head(rawCounts)
+```
+#Change Column Names
+The column names don't match the naming convention we've been using so far, so rename them.
+```{r}
+#Get the column names
+uglyColumns=colnames(rawCounts)
+#Replace column names using Aipnn format.
+uglyColumns=gsub('GE_CC',"Aip",uglyColumns)
+uglyColumns=gsub('GE_MC',"Aip",uglyColumns)
+uglyColumns=gsub('GE_CV',"Aip",uglyColumns)
+prettyColumns=gsub('GE_MV',"Aip",uglyColumns)
+#Clean up objects when you are done with them to make it easier to find the variables
+#of interest in the Environment pane of RStudio.
+rm(uglyColumns)
+#Assign the new column names to the table
+colnames(rawCounts) <- prettyColumns
+#Done witb prettyColumns now so remove
+rm(prettyColumns)
+#Display with head
+head(rawCounts)
+```
+#Sort columns
+```{r}
+rawCounts <- rawCounts[ , order(names(rawCounts))]
+head(rawCounts)
+```
+#Samples.csv
+Read in Samples.csv downloaded from Blackboard. This file provides the treatment information for each of the samples. There are 24 samples with four possible treatment combinations per sample, and 6 replicates per treatment combination. Display the whole table by just putting the variable name by itself as a line of code.
+```{r}
+#Read in Samples.csv downloaded from Blackboard
+colData <- read.csv("Samples.csv", row.names=1)
+#Display the whole table
+colData
+```
+#Change Treatment Descriptions
+To make the output easier to read, change the treatment names to be more clear. 
+```{r}
+colData$Menthol <- gsub("Control","NoMenthol",colData$Menthol)
+colData$Vibrio <- gsub("Control","NoVibrio",colData$Vibrio)
+colData
+```
+#Sort Columns
+Sort the columns so they match the count tables. Save the session data.
+```{r}
+colData <- colData[with(colData, order(row.names(colData))), ]
+colData
+#Save session data to load in next script.
+save.image("clcCountsBlast2GoAnnotations.RData")
+```

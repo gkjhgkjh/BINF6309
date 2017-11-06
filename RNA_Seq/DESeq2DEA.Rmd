@@ -1,0 +1,93 @@
+---
+title: "DESeq2DEA"
+output: html_document
+---
+
+```{r}
+library("DESeq2")
+```
+
+#Load saved RData
+```{r}
+load("clcCountsBlast2GoAnnotations.RData")
+```
+
+```{r}
+ddsAll <- DESeqDataSetFromMatrix(countData = rawCounts,
+                                 colData = colData,
+                                 design = ~ Vibrio + Menthol)
+```
+
+```{r}
+ddsAll$Menthol <- relevel(ddsAll$Menthol, ref = "NoMenthol")
+ddsAll$Vibrio <- relevel(ddsAll$Vibrio, ref = "NoVibrio")
+```
+
+```{r}
+nrow(counts(ddsAll))
+```
+
+```{r}
+ddsAll <- ddsAll[ rowSums(counts(ddsAll)) > 10,]
+nrow(counts(ddsAll))
+```
+
+```{r}
+ddsAll <- DESeq(ddsAll)
+```
+
+```{r}
+resultsNames(ddsAll)
+```
+
+```{r}
+resVibrio <- results(ddsAll, alpha = 0.05, name = "Vibrio_Vibrio_vs_NoVibrio")
+resMenthol <- results(ddsAll, alpha=0.05, name="Menthol_Menthol_vs_NoMenthol")
+dfVibrio <- as.data.frame(resVibrio)
+dfMenthol <- as.data.frame(resMenthol)
+```
+
+```{r}
+head(dfVibrio)
+```
+
+```{r}
+head(dfMenthol)
+```
+
+```{r}
+dfVibrio <- subset(subset(dfVibrio, select=c(log2FoldChange, padj)))
+head(dfVibrio)
+```
+
+```{r}
+dfMenthol <- subset(subset(dfMenthol, select=c(log2FoldChange, padj)))
+head(dfMenthol)
+```
+
+```{r}
+dfBoth <- merge(dfMenthol, dfVibrio, by=0, suffixes = c(".Menthol",".Vibrio"))
+rownames(dfBoth) <- dfBoth$Row.names
+head(dfBoth)
+```
+
+```{r}
+dfBoth <- subset(dfBoth, select = -c(Row.names) )
+head(dfBoth)
+```
+
+```{r}
+dfBothAnnot <- merge(dfBoth, geneDesc,by=0,all.x=TRUE )
+rownames(dfBothAnnot) <- dfBothAnnot$Row.names
+dfBothAnnot <- subset(dfBothAnnot, select = -c(Row.names) )
+head(dfBothAnnot, n=10)
+```
+
+```{r}
+save(ddsAll, dfBothAnnot, resVibrio, resMenthol, file="summarizedDeResults.RData")
+```
+
+```{r}
+rm(list=ls())
+```
+
