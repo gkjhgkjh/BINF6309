@@ -1,4 +1,5 @@
 #!/bin/bash
+#hard filtering to get known variants vcf file
 vcf='genotype.vcf'
 vcfOut='filteredSnps.vcf'
 baseCommand='nice -n19 java -jar /usr/local/programs/GenomeAnalysisTK-3.8-0/GenomeAnalysisTK.jar'

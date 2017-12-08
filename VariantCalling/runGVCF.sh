@@ -1,4 +1,5 @@
 #!/bin/bash
+#create merged vcf file
 vcf="$(ls -q vcf/*.vcf)"
 inPath='vcf/'
 replacement='--variant vcf/'

@@ -1,6 +1,7 @@
 #!/bin/bash
 inPath='vcf/'
 ext='.vcf'
+#replace sample1 to accesion number for samples
 for vcf in vcf/*.vcf
 do
 	sample="${vcf/$inPath/}"
