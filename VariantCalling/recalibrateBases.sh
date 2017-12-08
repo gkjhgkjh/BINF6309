@@ -3,6 +3,9 @@ vcf='filteredSnps.vcf'
 bam='mergedbam.bam'
 fa='vShiloni.fasta'
 basecommand='nice -n19 java -jar /usr/local/programs/GenomeAnalysisTK-3.8-0/GenomeAnalysisTK.jar'
+#1. analyze patterns of covariation in the sequence dataset
+#2. second pass to analyze covariation remaining after recalibration
+#3. Apply the recalibration
 ($basecommand \
 -T BaseRecalibrator \
 -R $fa \
