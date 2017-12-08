@@ -8,6 +8,7 @@ basecommand='nice -n19 java -jar /usr/local/programs/GenomeAnalysisTK-3.8-0/Geno
 -R $fa \
 -I $bam \
 -knownSites $vcf \
+-nct 16 \
 -o recal_data.table \
 && $basecommand \
 -T BaseRecalibrator \
@@ -15,11 +16,13 @@ basecommand='nice -n19 java -jar /usr/local/programs/GenomeAnalysisTK-3.8-0/Geno
 -I $bam \
 -knownSites $vcf \
 -BQSR recal_data.table \
+-nct 16 \
 -o post_recal_data.table \
 && $basecommand \
 -T PrintReads \
 -R $fa \
 -I $bam \
 -BQSR recal_data.table \
+-nct 16 \
 -o recal_reads.bam) \
 1>recal.log 2>recal.err &
